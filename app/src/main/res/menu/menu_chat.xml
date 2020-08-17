@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_edit_message"
+        android:icon="@drawable/ic_action_edit_icon"
+        android:title="Edit"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item_delete_message"
+        android:icon="@drawable/ic_delete"
+        android:title="Delete"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item_voice_call"
+        android:icon="@drawable/ic_phone"
+        android:title="Voice Call" />
+    <item
+        android:id="@+id/item_video_call"
+        android:icon="@drawable/ic_video_call"
+        android:title="Video Call" />
+</menu>

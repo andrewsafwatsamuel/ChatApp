@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ChatAppFinal</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register_underlined"><u>Register</u></string>
+    <string name="sender_id">1040853594999</string>
+    <string name="end_call">End Call</string>
+    <string name="action_call" translatable="false">action_call</string>
+    <string name="muted">muted</string>
+    <string name="mute">Mute</string>
+    <string name="delete">Delete</string>
+    <string name="contacts">Contacts</string>
+    <string name="log_out">Log out</string>
+    <string name="delete_totally">Delete totally</string>
+    <string name="delete_for_me">Delete For Me</string>
+    <string name="delete_messages">Delete Messages</string>
+    <string name="group_id">Group Id</string>
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.chatappfinal">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:name=".ChatAppFinalApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".presentation.features.AddToChatActivity"
+            android:theme="@style/AppTheme.popup"/>
+        <activity
+            android:name=".presentation.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.connectycube.pushnotifications.TYPE"
+            android:value="FCM" />
+        <meta-data
+            android:name="com.connectycube.pushnotifications.SENDER_ID"
+            android:value="@string/sender_id" />
+        <meta-data
+            android:name="com.connectycube.pushnotifications.ENVIRONMENT"
+            android:value="DEVELOPMENT" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".domain.connectyCube.pushNotifications.FCMService"
+            android:directBootAware="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_SCREENING_SERVICE"
+            tools:targetApi="n">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".domain.connectyCube.pushNotifications.CallBroadCastReceiver"
+            android:directBootAware="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="@string/action_call" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

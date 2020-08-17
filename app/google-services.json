@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "482739188145",
+    "firebase_url": "https://chatting-bcb19.firebaseio.com",
+    "project_id": "chatting-bcb19",
+    "storage_bucket": "chatting-bcb19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482739188145:android:8823804f684ec03bdacd90",
+        "android_client_info": {
+          "package_name": "com.example.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482739188145-p48u7qsc7int9hnm2pc2rpfhrmkd0gr3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatapp",
+            "certificate_hash": "bde56ba74a43de349690be6ccceda4e5b3ed2f71"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSpJLRc5ksoi9X5iDaYqmwswhBylBhxYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482739188145:android:2bbff4fb6c1f8f16dacd90",
+        "android_client_info": {
+          "package_name": "com.example.chatappfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482739188145-ogc4p8qrqlg2lf1uf4p3r500qjsp4t72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatappfinal",
+            "certificate_hash": "bde56ba74a43de349690be6ccceda4e5b3ed2f71"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSpJLRc5ksoi9X5iDaYqmwswhBylBhxYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

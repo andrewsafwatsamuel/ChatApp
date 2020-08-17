@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ripple_style"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/item_selected_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/check_box"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/dialog_photo_imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/last_message_textView"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintStart_toEndOf="@+id/item_selected_checkBox"
+        app:layout_constraintTop_toTopOf="@+id/dialog_name_textView"
+        app:srcCompat="@drawable/userpic"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/unread_messages_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/unread_background"
+        android:gravity="center"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_photo_imageView"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_photo_imageView"
+        tools:text="3" />
+
+    <TextView
+        android:id="@+id/dialog_name_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/last_message_textView"
+        app:layout_constraintEnd_toStartOf="@+id/last_message_date_textView"
+        app:layout_constraintStart_toEndOf="@+id/dialog_photo_imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Laura Owens" />
+
+    <TextView
+        android:id="@+id/last_message_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_name_textView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/dialog_name_textView"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_name_textView"
+        tools:text="Hello world" />
+
+    <TextView
+        android:id="@+id/last_message_date_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:textColor="@color/colorTextBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dialog_name_textView"
+        tools:text="5:04pm" />
+
+    <ImageView
+        android:id="@+id/is_selected_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/last_message_date_textView"
+        app:layout_constraintTop_toBottomOf="@+id/last_message_date_textView"
+        app:srcCompat="@drawable/ic_baseline_check_circle_24"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/mute_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/muted"
+        android:tint="@android:color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/last_message_date_textView"
+        app:layout_constraintStart_toStartOf="@+id/last_message_date_textView"
+        app:layout_constraintTop_toBottomOf="@+id/last_message_date_textView"
+        app:srcCompat="@drawable/ic_mute" />
+</androidx.constraintlayout.widget.ConstraintLayout>
