@@ -87,7 +87,8 @@ class FCMService(
         data["dialog_name"],
         data["message_text"],
         data["type"],
-        data["user_id"].takeUnless { it.isNullOrBlank() }?.toInt()
+        data["user_id"].takeUnless { it.isNullOrBlank() }?.toInt(),
+        data["sender_login"]
     ).takeUnless { currentDialog.isCurrentDialog(it.dialogId)  }
         ?.let { pushObjectDao.insertMessage(it) }
         ?.subscribeOn(Schedulers.io())

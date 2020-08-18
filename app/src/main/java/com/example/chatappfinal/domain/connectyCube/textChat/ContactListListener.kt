@@ -76,8 +76,7 @@ fun acceptRequest(id: Int, callback: EntityCallback<Void>) =
 fun rejectRequest(id: Int, callback: EntityCallback<Void>) =
     chatRoster.doOnRoster { reject(id, callback) }
 
-fun removeContact(entry: Int, callback: EntityCallback<Void>) =
-    chatRoster.doOnRoster {
+fun removeContact(entry: Int) = chatRoster.doOnRoster {
         unsubscribe(entry, createEntityCallbacks({ reload() }, Timber::e))
     }
 

@@ -31,12 +31,14 @@ fun composeChatNotification(
     dialogId: String,
     dialogName: String,
     messageId: String = "",
-    messageText: String = ""
+    messageText: String = "",
+    senderLogin:String = ""
 ): String = PushObject(
     messageId,
     dialogId,
     dialogName,
     messageText,
     type,
-    getUserFromPreference()?.id ?: 0
+    getUserFromPreference()?.id ?: 0,
+    senderLogin
 ).let { Gson().toJson(it) }

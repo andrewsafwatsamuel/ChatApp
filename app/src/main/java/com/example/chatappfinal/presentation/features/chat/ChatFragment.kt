@@ -113,7 +113,7 @@ class ChatFragment : Fragment() {
     ) {
         createEvent(
             StringifyArrayList<Int>().apply { addAll(dialog.occupants) }, composeChatNotification(
-                MESSAGE, dialog.dialogId, dialog.name, messageId, messageText
+                MESSAGE, dialog.dialogId, dialog.name, messageId, messageText, getUserFromPreference()?.login?:""
             )
         )
     }

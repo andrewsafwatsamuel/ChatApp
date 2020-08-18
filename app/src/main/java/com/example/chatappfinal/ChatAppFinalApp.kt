@@ -79,7 +79,8 @@ class ChatAppFinalApp : Application() {
                 value.setTitle(),
                 value[0].messageText,
                 value[0].type,
-                value[0].userId
+                value[0].userId,
+                value[0].senderLogin
             )
             onNotLoggedIn(value[0].dialogId?:""){
                 sendChatNotification(push, messageBuilder.toString(),it)
@@ -102,7 +103,7 @@ class ChatAppFinalApp : Application() {
         })
 
     private fun List<PushObject>.setTitle()=(if (size==1) "1 message " else "$size messages ")
-        .plus("from ${get(0).dialogName}")
+        .plus("from ${get(0).senderLogin}")
 
     private fun sendChatNotification(pushObject: PushObject, bigText: String,dialog: ConnectycubeChatDialog) {
         createNotification(pushObject, bigText,dialog)

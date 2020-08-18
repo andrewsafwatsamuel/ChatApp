@@ -51,7 +51,7 @@ class EditDialogViewModel(
     }
 
     private fun adminsCallbacks() = createEntityCallbacks<ConnectycubeChatDialog>(
-        { onAdminsSuccess(it);Timber.i(it.toString()) },
+        { onAdminsSuccess(it);Timber.i("admin ids ${it?.adminsIds}") },
         { setError(it?.message);Timber.e(it) }
     )
 

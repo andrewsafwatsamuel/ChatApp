@@ -22,7 +22,8 @@ data class PushObject(
     @field:SerializedName("dialog_name") val dialogName: String? ,
     @field:SerializedName("message_text") val messageText: String? ,
     @field:SerializedName("type") val type: String? ,
-    @field:SerializedName("user_id") val userId: Int?
+    @field:SerializedName("user_id") val userId: Int?,
+    @field:SerializedName("sender_login") val senderLogin:String?
 )
 
 data class InAppDialog(
