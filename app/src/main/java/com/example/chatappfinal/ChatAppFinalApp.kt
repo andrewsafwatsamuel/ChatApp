@@ -9,14 +9,12 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import com.connectycube.chat.ConnectycubeRestChatService
 import com.connectycube.chat.model.ConnectycubeChatDialog
-import com.connectycube.chat.model.ConnectycubeRosterEntry
 import com.connectycube.core.EntityCallback
 import com.connectycube.core.exception.ResponseException
 import com.example.chatappfinal.domain.connectyCube.ConnectyCube
 import com.example.chatappfinal.domain.connectyCube.PushObject
 import com.example.chatappfinal.domain.connectyCube.pushNotifications.*
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogin
-import com.example.chatappfinal.domain.connectyCube.textChat.isLoggedIn
 import com.example.chatappfinal.domain.dataSources.databaseGateway.chatDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -88,9 +86,9 @@ class ChatAppFinalApp : Application() {
 
         }
 
-    fun onNotLoggedIn(id: String,dialog: (ConnectycubeChatDialog)->Unit){
-        if (isLoggedIn()) getDialog(id,dialog) else chatLogin { if (it!=null) getDialog(id,dialog) }
-    }
+    fun onNotLoggedIn(id: String,dialog: (ConnectycubeChatDialog)->Unit)=
+        chatLogin { if (it!=null) getDialog(id,dialog) }
+
 
     fun getDialog(id:String,dialog: (ConnectycubeChatDialog)->Unit)=ConnectycubeRestChatService
         .getChatDialogById(id)

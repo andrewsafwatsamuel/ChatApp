@@ -12,16 +12,18 @@ import java.lang.Exception
 fun chatLogin(
     user: ConnectycubeUser? = getUserFromPreference(),
     chatService: ConnectycubeChatService = chatInstance,
-    onComplete:(Exception?)->Unit
+    onComplete: (Exception?) -> Unit
 ) = user?.apply { this.id = id; this.password = password }
     ?.let {
         //for message status sent, delivered and read
-        chatService.setUseStreamManagement(true)
-        chatService.login(it, createEntityCallbacks<Unit> ({ initOnLogin();onComplete(null)},onComplete))
+        if (!isLoggedIn()) {
+            chatService.setUseStreamManagement(true)
+            chatService.login(it, createEntityCallbacks<Unit>({ initOnLogin();onComplete(null) }, onComplete))
+        } else onComplete(null)
     }
 
-fun chatLogout(onComplete:(Exception?)->Unit) = chatInstance
-    .logout(createEntityCallbacks({onComplete(null)},onComplete))
+fun chatLogout(onComplete: (Exception?) -> Unit) = chatInstance
+    .logout(createEntityCallbacks({ onComplete(null) }, onComplete))
 
 fun initOnLogin() {
     initializeRtc()

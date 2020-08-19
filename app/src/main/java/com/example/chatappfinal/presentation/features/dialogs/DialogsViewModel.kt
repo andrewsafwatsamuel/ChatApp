@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.connectycube.chat.model.ConnectycubeChatDialog
 import com.example.chatappfinal.domain.RetrieveCacheRepository
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogin
-import com.example.chatappfinal.domain.connectyCube.textChat.dialog.markAsInActive
-import com.example.chatappfinal.domain.connectyCube.textChat.isLoggedIn
 import com.example.chatappfinal.domain.contactsRepository
 import com.example.chatappfinal.domain.dialogsRepository
 import com.example.chatappfinal.presentation.UNKNOWN_ERROR
@@ -27,7 +25,7 @@ class DialogsViewModel(
 
     fun login() {
         dialogStates.value = DialogsLoading
-        if (isLoggedIn()) retrieveDialogs() else chatLogin { onFinishedLogin(it) }
+        chatLogin { onFinishedLogin(it) }
     }
 
     private fun onFinishedLogin(exception: Exception?) = if (exception == null) {
@@ -37,11 +35,10 @@ class DialogsViewModel(
         dialogStates.value = DialogsError(exception.message ?: UNKNOWN_ERROR)
     }
 
-    fun retrieveDialogs() {
-        if (isLoggedIn()) repository.updateData {
-            dialogStates.value = if (it == null) DialogsSuccess(repository.retrieveData())
-            else DialogsError(it)
-        }
+    fun retrieveDialogs() = repository.updateData {
+        dialogStates.value = if (it == null) DialogsSuccess(repository.retrieveData())
+        else DialogsError(it)
     }
+
 
 }

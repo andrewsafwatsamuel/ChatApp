@@ -55,7 +55,7 @@ class DefaultContactsRepository(
     private val roster: ConnectycubeRoster = chatRoster
 ) : RetrieveCacheRepository<ConnectycubeUser> {
 
-    val ids by lazy { roster.entries.map { it.userId } }
+    private val ids by lazy { roster.entries.map { it.userId } }
 
     override fun updateData(
         onFinish: (String?) -> Unit

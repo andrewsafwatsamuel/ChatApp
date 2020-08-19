@@ -11,7 +11,6 @@ import com.example.chatappfinal.R
 import com.example.chatappfinal.domain.connectyCube.PushObject
 import com.example.chatappfinal.domain.connectyCube.rtc.*
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogin
-import com.example.chatappfinal.domain.connectyCube.textChat.isLoggedIn
 import com.example.chatappfinal.domain.dataSources.databaseGateway.PushObjectDao
 import com.example.chatappfinal.domain.dataSources.databaseGateway.chatDatabase
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -30,17 +29,14 @@ class FCMService(
 
     override fun onCreate() {
         super.onCreate()
-        if (!isLoggedIn()) chatLogin { }
+        chatLogin { }
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        login(message)
+        chatLogin { if (it == null) onLoggedIn(message) }
     }
 
-    private fun login(message: RemoteMessage) {
-        if (!isLoggedIn()) chatLogin { if (it == null) onLoggedIn(message) } else onLoggedIn(message)
-    }
 
     private fun onLoggedIn(message: RemoteMessage) = when (message.data["type"]) {
         CALL -> observeSession(message.data["dialog_name"] ?: "")
