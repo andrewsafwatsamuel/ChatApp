@@ -22,11 +22,14 @@ import com.example.chatappfinal.domain.connectyCube.rtc.sessionCallbacks
 import com.example.chatappfinal.domain.connectyCube.signOut
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogout
 import com.example.chatappfinal.domain.connectyCube.toInApp
+import com.example.chatappfinal.domain.contactsRepository
+import com.example.chatappfinal.domain.dataSources.runtimeCache
 import com.example.chatappfinal.presentation.hide
 import com.example.chatappfinal.presentation.show
 import kotlinx.android.synthetic.main.error_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_dialogs.*
 import kotlinx.android.synthetic.main.toolbar.view.*
+import timber.log.Timber
 
 class DialogsFragment : Fragment() {
 
@@ -101,8 +104,9 @@ class DialogsFragment : Fragment() {
     private fun logout(): Boolean {
         signOut()
         removeUserFromPreference()
-        findNavController().navigate(R.id.action_dialogsFragment_to_loginFragment)
+        runtimeCache.clearCache()
         chatLogout {  }
+        findNavController().navigate(R.id.action_dialogsFragment_to_loginFragment)
         return true
     }
 

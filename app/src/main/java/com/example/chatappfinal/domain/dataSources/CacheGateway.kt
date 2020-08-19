@@ -15,6 +15,8 @@ fun addToCache(key: String, value: Any?) {
 @Suppress("UNCHECKED_CAST")
 fun <T> getFromCache(key: String) = cache[key] as T
 
+fun removeFromCache(key: String) = cache.remove(key)
+
 val runtimeCache by lazy { RuntimeCache() }
 
 class RuntimeCache {
@@ -36,5 +38,9 @@ class RuntimeCache {
         getFromCache<HashMap<String, ConnectycubeChatDialog>?>(DIALOGS)!![it.dialogId] = it
     }
 
+    fun clearCache(){
+        removeFromCache(CONTACTS)
+        removeFromCache(DIALOGS)
+    }
 }
 
