@@ -60,7 +60,7 @@ fun ImageView.loadPhoto(url: String?) = Glide.with(context)
 
 @SuppressLint("SimpleDateFormat")
 fun formatDate(date: Long): String = SimpleDateFormat("hh:mm aa")
-    .format(Date(date))
+    .format(Date(date*1000))
 
 fun Fragment.openPhotos() = Intent(Intent.ACTION_GET_CONTENT)
     .apply {

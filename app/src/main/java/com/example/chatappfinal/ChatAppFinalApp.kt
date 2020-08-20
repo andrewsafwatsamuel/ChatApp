@@ -86,11 +86,11 @@ class ChatAppFinalApp : Application() {
 
         }
 
-    fun onNotLoggedIn(id: String,dialog: (ConnectycubeChatDialog)->Unit)=
+    private fun onNotLoggedIn(id: String, dialog: (ConnectycubeChatDialog)->Unit)=
         chatLogin { if (it!=null) getDialog(id,dialog) }
 
 
-    fun getDialog(id:String,dialog: (ConnectycubeChatDialog)->Unit)=ConnectycubeRestChatService
+    private fun getDialog(id:String, dialog: (ConnectycubeChatDialog)->Unit)=ConnectycubeRestChatService
         .getChatDialogById(id)
         .performAsync(object :EntityCallback<ConnectycubeChatDialog> {
             override fun onSuccess(p0: ConnectycubeChatDialog?, p1: Bundle?) {

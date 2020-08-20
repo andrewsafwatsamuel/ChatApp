@@ -55,7 +55,7 @@ class MessageSender(private var attachment: ConnectycubeAttachment? = null) {
         messageBody: String,
         message: ConnectycubeChatMessage = ConnectycubeChatMessage()
     ) = message.apply {
-        dateSent = System.currentTimeMillis() / 1000
+        dateSent = System.currentTimeMillis()
         body = messageBody
         setSaveToHistory(true)
         isMarkable = true
