@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.connectycube.chat.model.ConnectycubeChatDialog
 import com.example.chatappfinal.domain.DefaultDialogsRepository
+import com.example.chatappfinal.domain.connectyCube.InAppMessage
 import com.example.chatappfinal.domain.connectyCube.textChat.dialog.setIsTyping
 import com.example.chatappfinal.domain.connectyCube.textChat.dialog.setNotTyping
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.MessageStatusChangedListener

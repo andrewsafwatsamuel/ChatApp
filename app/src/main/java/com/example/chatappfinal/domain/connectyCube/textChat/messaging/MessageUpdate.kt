@@ -1,5 +1,6 @@
 package com.example.chatappfinal.domain.connectyCube.textChat.messaging
 
+import com.example.chatappfinal.domain.connectyCube.InAppMessage
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.PublishSubject

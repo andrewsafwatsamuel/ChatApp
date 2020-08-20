@@ -3,6 +3,7 @@ package com.example.chatappfinal.domain.connectyCube
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.connectycube.chat.model.ConnectycubeChatDialog
+import com.connectycube.chat.model.ConnectycubeChatMessage
 import com.google.gson.annotations.SerializedName
 
 data class RegParams(
@@ -29,4 +30,11 @@ data class PushObject(
 data class InAppDialog(
     val dialog: ConnectycubeChatDialog,
     var unmuted: Boolean? = null
+)
+
+//TODO remov
+data class InAppMessage(
+    val status: String,
+    val connectyCubeMessage: ConnectycubeChatMessage,
+    val senderName:String = ""
 )

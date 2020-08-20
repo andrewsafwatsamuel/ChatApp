@@ -5,6 +5,7 @@ import com.connectycube.chat.listeners.MessageDeleteListener
 import com.connectycube.chat.listeners.MessageUpdateListener
 import com.connectycube.core.EntityCallback
 import com.connectycube.core.exception.ResponseException
+import com.example.chatappfinal.domain.connectyCube.InAppMessage
 import timber.log.Timber
 
 val operationsListener by lazy { MessageOperationListener() }

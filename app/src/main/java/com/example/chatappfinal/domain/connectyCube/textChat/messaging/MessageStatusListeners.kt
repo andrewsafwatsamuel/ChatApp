@@ -3,6 +3,7 @@ package com.example.chatappfinal.domain.connectyCube.textChat.messaging
 import com.connectycube.chat.listeners.ChatDialogMessageSentListener
 import com.connectycube.chat.listeners.MessageStatusListener
 import com.connectycube.chat.model.ConnectycubeChatMessage
+import com.example.chatappfinal.domain.connectyCube.InAppMessage
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -68,12 +69,6 @@ class MessageStatusChangedListener(
         if (this[messageId] != null) this[messageId] = InAppMessage(status, get(messageId)!!.connectyCubeMessage)
         else Unit
 }
-
-//TODO needs to be moved to separate file
-data class InAppMessage(
-    val status: String,
-    val connectyCubeMessage: ConnectycubeChatMessage
-)
 
 fun ConnectycubeChatMessage.getMessageStatus(): String = when {
     deliveredIds?.size ?: 0 < 2 && readIds?.size ?: 0 < 2 -> SENT

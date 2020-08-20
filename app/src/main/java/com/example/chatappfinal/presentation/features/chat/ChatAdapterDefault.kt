@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.connectycube.chat.model.ConnectycubeChatMessage
 import com.example.chatappfinal.R
+import com.example.chatappfinal.domain.connectyCube.InAppMessage
 import com.example.chatappfinal.domain.connectyCube.getUserFromPreference
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.DELIVERED
-import com.example.chatappfinal.domain.connectyCube.textChat.messaging.InAppMessage
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.READ
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.getAttachmentUrl
 import com.example.chatappfinal.presentation.BaseViewHolder

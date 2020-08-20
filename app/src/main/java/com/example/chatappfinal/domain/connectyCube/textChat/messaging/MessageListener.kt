@@ -7,6 +7,7 @@ import com.connectycube.chat.model.ConnectycubeChatDialog
 import com.connectycube.chat.model.ConnectycubeChatMessage
 import com.connectycube.core.EntityCallback
 import com.connectycube.core.exception.ResponseException
+import com.example.chatappfinal.domain.connectyCube.InAppMessage
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.PublishSubject
