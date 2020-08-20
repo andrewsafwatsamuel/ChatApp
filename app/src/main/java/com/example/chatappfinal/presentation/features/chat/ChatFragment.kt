@@ -40,7 +40,9 @@ class ChatFragment : Fragment() {
     internal val dialog by lazy { ChatFragmentArgs.fromBundle(requireArguments()).dialog }
 
     private val adapter by lazy {
-        ChatAdapterDefault(onLongClick = {
+        ChatAdapterDefault(
+            dialog.type,
+            onLongClick = {
             onItemsSelected(it.map { message -> message.connectyCubeMessage })
         }, onPhotoClicked = { url ->
             ChatFragmentDirections.actionGlobalPhotoViewerFragment(url).let { findNavController().navigate(it)}

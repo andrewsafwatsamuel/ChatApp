@@ -7,6 +7,7 @@ import com.connectycube.chat.model.ConnectycubeChatDialog
 import com.connectycube.chat.model.ConnectycubeChatMessage
 import com.connectycube.core.EntityCallback
 import com.connectycube.core.exception.ResponseException
+import com.connectycube.users.model.ConnectycubeUser
 import com.example.chatappfinal.domain.connectyCube.InAppMessage
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -16,7 +17,8 @@ import timber.log.Timber
 val defaultMessageListener by lazy { MessageListener() }
 
 class MessageListener(
-    private val messageSubject: PublishSubject<ConnectycubeChatMessage> = PublishSubject.create()
+    private val messageSubject: PublishSubject<ConnectycubeChatMessage> = PublishSubject.create(),
+    private val users: HashMap<Int, ConnectycubeUser> = hashMapOf()
 ) : ChatDialogMessageListener, EntityCallback<ArrayList<ConnectycubeChatMessage>> {
     override fun processMessage(p0: String?, p1: ConnectycubeChatMessage?, p2: Int?) {
         p1?.let { messageSubject.onNext(it) }
@@ -40,15 +42,18 @@ class MessageListener(
         messagesMap: HashMap<String, InAppMessage>
     ): Disposable = messageSubject
         .subscribeOn(AndroidSchedulers.mainThread())
-        .subscribe({ it?.onMessageReceived(dialog, messagesMap)}, Timber::e)
+        .subscribe({ it?.onMessageReceived(dialog, messagesMap) }, Timber::e)
 
     private fun ConnectycubeChatMessage.onMessageReceived(
         dialog: ConnectycubeChatDialog,
         messagesMap: HashMap<String, InAppMessage>
     ) {
         dialog.markAsRead(this)
-        messagesMap[id] = InAppMessage(getMessageStatus(), this)
+        messagesMap[id] =
+            InAppMessage(getMessageStatus(), this, users[this.senderId]?.login ?: "Sender")
         emitMessages(messagesMap)
     }
 
+    fun setUsers(users: ArrayList<ConnectycubeUser>?) = users
+        ?.forEach { this.users[it.id] = it }
 }

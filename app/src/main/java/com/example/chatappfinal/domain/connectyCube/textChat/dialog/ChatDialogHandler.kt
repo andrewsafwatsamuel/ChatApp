@@ -10,7 +10,9 @@ import com.connectycube.chat.model.ConnectycubeChatMessage
 import com.connectycube.chat.request.MessageGetBuilder
 import com.connectycube.core.EntityCallback
 import com.example.chatappfinal.domain.connectyCube.chatInstance
+import com.example.chatappfinal.domain.connectyCube.getUsers
 import com.example.chatappfinal.domain.connectyCube.textChat.createEntityCallbacks
+import com.example.chatappfinal.domain.connectyCube.textChat.messaging.MessageListener
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.defaultMessageListener
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.defaultMessageStatusListener
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.operationsListener
@@ -19,7 +21,8 @@ import timber.log.Timber
 class ChatDialogHandler(
     private val dialog: ConnectycubeChatDialog,
     lifecycleOwner: LifecycleOwner,
-    private val callBacks: EntityCallback<ArrayList<ConnectycubeChatMessage>>
+    private val callBacks: EntityCallback<ArrayList<ConnectycubeChatMessage>>,
+    private val listener: MessageListener = defaultMessageListener
 ) : LifecycleEventObserver {
 
     init {
@@ -35,7 +38,13 @@ class ChatDialogHandler(
 
     private fun doOnResume() {
         initialize()
-        getMessages(dialog.dialogId, callBacks)
+        getUsers(dialog.occupants, createEntityCallbacks(
+            {
+                listener.setUsers(it)
+                getMessages(dialog.dialogId, callBacks)
+            },
+            {}
+        ))
     }
 
     private fun initialize() = with(dialog) {
