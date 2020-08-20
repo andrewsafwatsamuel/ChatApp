@@ -53,4 +53,8 @@ fun getUser(id: Int, callbacks: EntityCallback<ConnectycubeUser>) =
     ConnectycubeUsers.getUser(id).performAsync(callbacks)
 
 fun toInApp(dialogs:List<ConnectycubeChatDialog>) = ArrayList<InAppDialog>()
-    .apply { dialogs.forEach { add(InAppDialog(it)) } }
+    .apply {
+        dialogs.forEach { add(InAppDialog(it)) }
+        sortByDescending { it.dialog.lastMessageDateSent }
+
+    }
