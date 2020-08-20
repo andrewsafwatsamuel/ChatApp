@@ -55,7 +55,7 @@ class ChatViewHolder(
             if (connectyCubeMessage.senderId == getUserFromPreference()?.id) statusImageView.setImageResource(
                 status.drawStatus()
             )
-            if (messageTextView.text == "null") messageTextView.hide()
+            if (messageTextView.text == "null"||messageTextView.text.isEmpty()) messageTextView.hide()
             isSelectedView.visibility = if (isSelected) View.VISIBLE else View.GONE
             if (senderName != getUserFromPreference()?.login && dialogType != ConnectycubeDialogType.PRIVATE) {
                 senderNameTextView.show()
