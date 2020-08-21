@@ -24,7 +24,5 @@ fun updateMessages(
 ) = messageUpdateSubject
     .debounce(100, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
     .subscribeOn(AndroidSchedulers.mainThread())
-    .subscribe({ it?.let { doOnSubscribe(it) }
-        Timber.i("messages are $it")
-    },{Timber.e(it)})
+    .subscribe({ it?.let { doOnSubscribe(it) } },{Timber.e(it)})
     .let { disposables.add(it) }
