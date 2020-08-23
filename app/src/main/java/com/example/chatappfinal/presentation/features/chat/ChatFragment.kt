@@ -12,6 +12,7 @@ import com.connectycube.chat.model.ConnectycubeChatDialog
 import com.connectycube.chat.model.ConnectycubeDialogType
 import com.connectycube.core.ConnectycubeProgressCallback
 import com.connectycube.core.helper.StringifyArrayList
+import com.example.chatappfinal.CallingActivity
 import com.example.chatappfinal.R
 import com.example.chatappfinal.domain.connectyCube.getUserFromPreference
 import com.example.chatappfinal.domain.connectyCube.pushNotifications.MESSAGE
@@ -183,7 +184,13 @@ class ChatFragment : Fragment() {
         else -> Unit
     }
 
-    private fun startCall(flag: String, dialog: ConnectycubeChatDialog) = ChatFragmentDirections
-        .actionChatFragmentToStartCallFragment(dialog.recipientId, flag, dialog)
-        .let { findNavController().navigate(it) }
+    private fun startCall(
+        flag: String,
+        dialog: ConnectycubeChatDialog
+    ) = Intent(requireContext(),CallingActivity::class.java)
+        .apply {
+            putExtra("recepientId",dialog.recipientId)
+            putExtra("flag",flag)
+            putExtra("dialog",dialog)
+        }.let { startActivity(it) }
 }

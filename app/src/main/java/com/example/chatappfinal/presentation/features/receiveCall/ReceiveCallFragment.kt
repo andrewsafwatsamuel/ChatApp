@@ -36,7 +36,6 @@ class ReceiveCallFragment : Fragment() {
 
         sessionCallbacks.observeOnSession {
             when(it){
-                is SessionClosed -> findNavController().navigateUp()
                 is NewCall -> {
                     session = it.session
                     getUser(session?.callerID?:0, createEntityCallbacks ({user->

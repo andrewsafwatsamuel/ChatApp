@@ -33,6 +33,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".CallingActivity"/>
+
         <meta-data
             android:name="com.connectycube.pushnotifications.TYPE"
             android:value="FCM" />

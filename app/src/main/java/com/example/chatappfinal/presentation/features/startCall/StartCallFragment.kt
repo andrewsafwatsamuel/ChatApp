@@ -58,7 +58,6 @@ class StartCallFragment : Fragment() {
 
     private fun endCall(){
     viewModel.session?.hangUp(viewModel.session?.userInfo)
-        findNavController().navigateUp()
     }
 
     private fun successCall(){

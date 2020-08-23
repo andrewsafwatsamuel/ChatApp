@@ -14,18 +14,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.connectycube.chat.model.ConnectycubeChatDialog
+import com.example.chatappfinal.CallingActivity
 import com.example.chatappfinal.R
 import com.example.chatappfinal.domain.connectyCube.pushNotifications.ONLINE_NOTIFICATION
 import com.example.chatappfinal.domain.connectyCube.removeUserFromPreference
 import com.example.chatappfinal.domain.connectyCube.rtc.NewCall
+import com.example.chatappfinal.domain.connectyCube.rtc.SessionClosed
 import com.example.chatappfinal.domain.connectyCube.rtc.sessionCallbacks
 import com.example.chatappfinal.domain.connectyCube.signOut
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogout
 import com.example.chatappfinal.domain.connectyCube.toInApp
-import com.example.chatappfinal.domain.contactsRepository
 import com.example.chatappfinal.domain.dataSources.runtimeCache
 import com.example.chatappfinal.presentation.hide
 import com.example.chatappfinal.presentation.show
+import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.android.synthetic.main.error_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_dialogs.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -47,7 +49,9 @@ class DialogsFragment : Fragment() {
             onLongClick = { onItemsSelected(it) }
         )
     }
-
+    private fun navigateToChat(dialog: ConnectycubeChatDialog) = DialogsFragmentDirections
+        .actionGlobalChatFragment(dialog)
+        .let { findNavController().navigate(it) }
     private val retryButton by lazy { dialogs_error_layout.retry_button }
     private val errorTextView by lazy { dialogs_error_layout.error_textView }
 
@@ -67,14 +71,15 @@ class DialogsFragment : Fragment() {
         dialogs_recyclerView.adapter = adapter
         viewModel.dialogStates.observe(viewLifecycleOwner, Observer { drawStates(it) })
         retryButton.setOnClickListener { viewModel.login() }
-        sessionCallbacks.observeOnSession { if (it is NewCall) { findNavController().navigate(R.id.action_global_receiveCallFragment) } }
+        sessionCallbacks.observeOnSession { if (it is NewCall) { navigateToCalling() } ;Timber.i(it.toString())}
         drawToolbar()
         floatingActionButton.setOnClickListener { findNavController().navigate(R.id.action_dialogsFragment_to_createChatFragment) }
     }
 
-    private fun navigateToChat(dialog: ConnectycubeChatDialog) = DialogsFragmentDirections
-        .actionGlobalChatFragment(dialog)
-        .let { findNavController().navigate(it) }
+    private fun navigateToCalling() = Intent(
+        requireContext(),
+        CallingActivity::class.java
+    ).let { startActivity(it) }
 
     private fun drawStates(state: DialogState) = when (state) {
         is DialogsLoading -> onLoading()

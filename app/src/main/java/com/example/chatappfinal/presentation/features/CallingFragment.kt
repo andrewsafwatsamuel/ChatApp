@@ -65,12 +65,9 @@ class CallingFragment : Fragment() {
             audioCallbacks.muteSubject.onNext(audioCallbacks.muteSubject.value?.let { !it }
                 ?: false)
         }
-        sessionCallbacks.observeOnSession {
-            if (it is StartToClose) findNavController().navigateUp()
-        }
+
         stop_call_imageView.setOnClickListener {
             session?.hangUp(session?.userInfo)
-            findNavController().navigateUp()
         }
         speakerSubject.onNext(true)
         speaker_imageView.setOnClickListener { speakerSubject.onNext(!speakerSubject.value) }

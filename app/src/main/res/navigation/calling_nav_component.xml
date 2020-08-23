@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calling_nav_component"
+    app:startDestination="@id/callingStarterFragment">
+    <fragment
+        android:id="@+id/callingFragment"
+        android:name="com.example.chatappfinal.presentation.features.CallingFragment"
+        android:label="CallingFragment" />
+    <fragment
+        android:id="@+id/startCallFragment"
+        android:name="com.example.chatappfinal.presentation.features.startCall.StartCallFragment"
+        android:label="fragment_receive_call"
+        tools:layout="@layout/fragment_receive_call" >
+        <action
+            android:id="@+id/action_startCallFragment_to_callingFragment"
+            app:destination="@id/callingFragment"
+            app:popUpTo="@id/calling_nav_component"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="recepientId"
+            app:argType="integer" />
+        <argument
+            android:name="flag"
+            app:argType="string" />
+        <argument
+            android:name="dialog"
+            app:argType="com.connectycube.chat.model.ConnectycubeChatDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/receiveCallFragment"
+        android:name="com.example.chatappfinal.presentation.features.receiveCall.ReceiveCallFragment"
+        android:label="ReceiveCallFragment" >
+        <action
+            android:id="@+id/action_receiveCallFragment_to_callingFragment"
+            app:destination="@id/callingFragment"
+            app:popUpTo="@id/calling_nav_component"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/callingStarterFragment"
+        android:name="com.example.chatappfinal.CallingStarterFragment"
+        android:label="fragment_calling_starter"
+        tools:layout="@layout/fragment_calling_starter" >
+        <action
+            android:id="@+id/action_callingStarterFragment_to_receiveCallFragment"
+            app:destination="@id/receiveCallFragment"
+            app:popUpTo="@id/calling_nav_component"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_callingStarterFragment_to_startCallFragment"
+            app:destination="@id/startCallFragment"
+            app:popUpTo="@id/calling_nav_component"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

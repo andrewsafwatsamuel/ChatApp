@@ -57,51 +57,12 @@
         android:name="com.example.chatappfinal.presentation.features.chat.ChatFragment"
         tools:layout="@layout/fragment_chat">
         <action
-            android:id="@+id/action_chatFragment_to_startCallFragment"
-            app:destination="@id/startCallFragment" />
-        <action
             android:id="@+id/action_chatFragment_to_editDialogFragment"
             app:destination="@id/editDialogFragment" />
         <argument
             android:name="dialog"
             app:argType="com.connectycube.chat.model.ConnectycubeChatDialog" />
     </fragment>
-    <fragment
-        android:id="@+id/startCallFragment"
-        android:name="com.example.chatappfinal.presentation.features.startCall.StartCallFragment"
-        android:label="fragment_start_call"
-        tools:layout="@layout/fragment_start_call" >
-        <argument
-            android:name="recepientId"
-            app:argType="integer" />
-        <argument
-            android:name="flag"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_startCallFragment_to_callingFragment"
-            app:destination="@id/callingFragment"
-            app:popUpTo="@id/startCallFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="dialog"
-            app:argType="com.connectycube.chat.model.ConnectycubeChatDialog" />
-    </fragment>
-    <fragment
-        android:id="@+id/receiveCallFragment"
-        android:name="com.example.chatappfinal.presentation.features.receiveCall.ReceiveCallFragment"
-        android:label="fragment_receive_call"
-        tools:layout="@layout/fragment_receive_call" >
-        <action
-            android:id="@+id/action_receiveCallFragment_to_callingFragment"
-            app:destination="@id/callingFragment"
-            app:popUpTo="@id/receiveCallFragment"
-            app:popUpToInclusive="true" />
-    </fragment><action android:id="@+id/action_global_receiveCallFragment" app:destination="@id/receiveCallFragment"/>
-    <fragment
-        android:id="@+id/callingFragment"
-        android:name="com.example.chatappfinal.presentation.features.CallingFragment"
-        android:label="fragment_calling"
-        tools:layout="@layout/fragment_calling" />
     <fragment
         android:id="@+id/contactsFragment"
         android:name="com.example.chatappfinal.presentation.features.contacts.ContactsFragment"
