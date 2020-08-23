@@ -16,6 +16,7 @@ import com.example.chatappfinal.domain.connectyCube.PushObject
 import com.example.chatappfinal.domain.connectyCube.pushNotifications.*
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogin
 import com.example.chatappfinal.domain.dataSources.databaseGateway.chatDatabase
+import com.example.chatappfinal.presentation.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -117,7 +118,7 @@ class ChatAppFinalApp : Application() {
         .setContentText(pushObject.messageText)
         .setContentTitle(pushObject.dialogName)
         .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
-        .apply { setContentIntent(createPendingIntent(R.id.chatFragment, Bundle().apply { putSerializable("dialog",dialog) })) }
+        .apply { setContentIntent(createPendingIntent(R.id.chatFragment, MainActivity::class.java,Bundle().apply { putSerializable("dialog",dialog) })) }
         .let { notificationManager.notify(Random().nextInt(), it.build()) }
 
     private fun createIntentBroadCast() = Intent(ONLINE_NOTIFICATION)

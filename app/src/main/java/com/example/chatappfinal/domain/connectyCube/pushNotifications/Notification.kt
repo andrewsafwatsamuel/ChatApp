@@ -1,5 +1,6 @@
 package com.example.chatappfinal.domain.connectyCube.pushNotifications
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -38,8 +39,8 @@ fun createNotificationChannel(channelId: String,name: String, importance: Int, d
         notificationManager.createNotificationChannel(channel)
     } else Unit
 
-fun Context.createPendingIntent(destination: Int,bundle: Bundle?=null): PendingIntent? = NavDeepLinkBuilder(this)
-    .setComponentName(MainActivity::class.java)
+fun<T:Activity> Context.createPendingIntent(destination: Int,activity: Class<T>,bundle: Bundle?=null): PendingIntent? = NavDeepLinkBuilder(this)
+    .setComponentName(activity)
     .setGraph(R.navigation.main_navigation)
     .setDestination(destination)
     .setArguments(bundle)

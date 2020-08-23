@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.example.chatappfinal.CALL_CHANNEL_ID
+import com.example.chatappfinal.CallingActivity
 import com.example.chatappfinal.R
 import com.example.chatappfinal.domain.connectyCube.PushObject
 import com.example.chatappfinal.domain.connectyCube.rtc.*
@@ -65,7 +66,7 @@ class FCMService(
     private fun createVideoNotification(name: String) =
         createNotificationBuilder(CALL_CHANNEL_ID).apply {
             setSmallIcon(R.drawable.ic_video_call)
-            setContentIntent(createPendingIntent(R.id.receiveCallFragment))
+            setContentIntent(createPendingIntent(R.id.receiveCallFragment,CallingActivity::class.java))
             setContentTitle("Incoming Call from $name")
             addAction(R.drawable.ic_phone, "Accept", createCallIntent(true, 103))
             addAction(R.drawable.ic_close, "Reject", createCallIntent(false, 104))
