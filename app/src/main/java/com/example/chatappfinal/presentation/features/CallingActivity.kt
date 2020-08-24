@@ -4,13 +4,8 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.audiofx.AcousticEchoCanceler
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.connectycube.videochat.RTCSession
 import com.connectycube.videochat.RTCTypes
 import com.example.chatappfinal.R
@@ -21,19 +16,20 @@ import com.example.chatappfinal.domain.connectyCube.rtc.*
 import com.example.chatappfinal.domain.connectyCube.switchCamera
 import com.example.chatappfinal.domain.connectyCube.textChat.createEntityCallbacks
 import com.example.chatappfinal.presentation.hide
+import com.example.chatappfinal.presentation.loadPhoto
 import com.example.chatappfinal.presentation.show
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import kotlinx.android.synthetic.main.fragment_calling.*
-import kotlinx.android.synthetic.main.fragment_calling.audio_controller_imageView
-import kotlinx.android.synthetic.main.fragment_calling.speaker_imageView
-import kotlinx.android.synthetic.main.fragment_calling.stop_call_imageView
-import kotlinx.android.synthetic.main.fragment_start_call.*
+import kotlinx.android.synthetic.main.activity_calling.*
+import kotlinx.android.synthetic.main.activity_calling.audio_controller_imageView
+import kotlinx.android.synthetic.main.activity_calling.speaker_imageView
+import kotlinx.android.synthetic.main.activity_calling.stop_call_imageView
+import kotlinx.android.synthetic.main.activity_start_call.*
 import timber.log.Timber
 
-class CallingFragment : Fragment() {
+class CallingActivity : AppCompatActivity() {
 
-    private val audioManager by lazy { requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager }
+    private val audioManager by lazy { getSystemService(Context.AUDIO_SERVICE) as AudioManager }
 
     private var session: RTCSession? = sessionCallbacks.session
 
@@ -45,17 +41,9 @@ class CallingFragment : Fragment() {
         .subscribeOn(Schedulers.computation())
         .subscribe({ if (it) disableSpeaker() else enableSpeaker() }, Throwable::printStackTrace)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = inflater.inflate(inflateOnType(), container, false)
-
-    private fun inflateOnType() =
-        if (isVideo) R.layout.fragment_calling else R.layout.fragment_start_call
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = context?.let {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(inflateOnType())
         incomingRingingManager.stopRinging()
 
         speaker_imageView.show()
@@ -74,35 +62,35 @@ class CallingFragment : Fragment() {
 
         onTypeVideo()
 
-    } ?: Unit
+        sessionCallbacks.observeOnSession { if (it is StartToClose) finish() }
+    }
 
+    private fun inflateOnType() =
+        if (isVideo) R.layout.activity_calling else R.layout.activity_start_call
 
     private fun onTypeVideo() = if (isVideo) {
 
-        videoCallbacks.remoteVideoLiveData.observe(viewLifecycleOwner, Observer {
+        videoCallbacks.remoteVideoLiveData.observe(this, Observer {
             it?.addRenderer(remote_opponentView)
         })
 
-        videoCallbacks.localVideoLiveData.observe(viewLifecycleOwner, Observer {
+        videoCallbacks.localVideoLiveData.observe(this, Observer {
             it?.addRenderer(local_opponentView)
             session?.initCapturer()
         })
 
         video_controller_imageView.setOnClickListener {
-            videoCallbacks.muteSubject.onNext(videoCallbacks.muteSubject.value?.let { !it }
-                ?: false)
+            videoCallbacks.muteSubject.onNext(videoCallbacks.muteSubject.value?.let { !it } ?: false)
         }
 
         rotate_camera_imageView.setOnClickListener { switchCamera() }
 
-    } else getUser(getOtherSideId(), createEntityCallbacks({
-        start_call_progressBar.hide()
-        Glide.with(requireContext())
-            .load(it?.avatar)
-            .placeholder(R.drawable.ic_person)
-            .into(recipient_imageView)
-        recipient_name_textView.text = it?.login ?: "UNKNOWN"
-    }, Timber::e)
+    } else getUser(
+        getOtherSideId(), createEntityCallbacks({
+            start_call_progressBar.hide()
+            recipient_imageView.loadPhoto(it?.avatar)
+            recipient_name_textView.text = it?.login ?: "UNKNOWN"
+        }, Timber::e)
     )
 
     private fun getOtherSideId() = if (sessionCallbacks.stateSubject.value is CallAccepted) {
@@ -110,7 +98,6 @@ class CallingFragment : Fragment() {
     } else {
         session?.callerID
     } ?: 0
-
 
     private fun enableSpeaker() {
         audioManager.mode = AudioManager.MODE_NORMAL

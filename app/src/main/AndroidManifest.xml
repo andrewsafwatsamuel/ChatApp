@@ -33,7 +33,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CallingActivity"/>
+        <activity android:name=".presentation.features.startCall.StartCallActivity"/>
+        <activity android:name=".presentation.features.receiveCall.ReceiveCallActivity"/>
+        <activity android:name=".presentation.features.CallingActivity"/>
 
         <meta-data
             android:name="com.connectycube.pushnotifications.TYPE"

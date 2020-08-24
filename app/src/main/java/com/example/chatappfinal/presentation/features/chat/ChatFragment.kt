@@ -12,7 +12,6 @@ import com.connectycube.chat.model.ConnectycubeChatDialog
 import com.connectycube.chat.model.ConnectycubeDialogType
 import com.connectycube.core.ConnectycubeProgressCallback
 import com.connectycube.core.helper.StringifyArrayList
-import com.example.chatappfinal.CallingActivity
 import com.example.chatappfinal.R
 import com.example.chatappfinal.domain.connectyCube.getUserFromPreference
 import com.example.chatappfinal.domain.connectyCube.pushNotifications.MESSAGE
@@ -25,6 +24,7 @@ import com.example.chatappfinal.domain.connectyCube.textChat.dialog.setNotTyping
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.editMessage
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.getRealPathFromURI
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.updateMessages
+import com.example.chatappfinal.presentation.features.startCall.StartCallActivity
 import com.example.chatappfinal.presentation.openPhotos
 import com.example.chatappfinal.presentation.typingListener
 import kotlinx.android.synthetic.main.content_conversation.*
@@ -79,7 +79,7 @@ class ChatFragment : Fragment() {
 
         updateMessages(viewModel.disposables) {
             adapter.submitList(it)
-            recyclerView.scrollToPosition(adapter.messages.size - 1)
+            recyclerView.scrollToPosition(it.size - 1)
             hideOnSelected()
         }
         setOnClicks(dialog)
@@ -187,7 +187,7 @@ class ChatFragment : Fragment() {
     private fun startCall(
         flag: String,
         dialog: ConnectycubeChatDialog
-    ) = Intent(requireContext(),CallingActivity::class.java)
+    ) = Intent(requireContext(),StartCallActivity::class.java)
         .apply {
             putExtra("recepientId",dialog.recipientId)
             putExtra("flag",flag)

@@ -14,20 +14,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.connectycube.chat.model.ConnectycubeChatDialog
-import com.example.chatappfinal.CallingActivity
 import com.example.chatappfinal.R
 import com.example.chatappfinal.domain.connectyCube.pushNotifications.ONLINE_NOTIFICATION
 import com.example.chatappfinal.domain.connectyCube.removeUserFromPreference
 import com.example.chatappfinal.domain.connectyCube.rtc.NewCall
-import com.example.chatappfinal.domain.connectyCube.rtc.SessionClosed
 import com.example.chatappfinal.domain.connectyCube.rtc.sessionCallbacks
 import com.example.chatappfinal.domain.connectyCube.signOut
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogout
 import com.example.chatappfinal.domain.connectyCube.toInApp
 import com.example.chatappfinal.domain.dataSources.runtimeCache
+import com.example.chatappfinal.presentation.features.receiveCall.ReceiveCallActivity
 import com.example.chatappfinal.presentation.hide
 import com.example.chatappfinal.presentation.show
-import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.android.synthetic.main.error_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_dialogs.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -78,7 +76,7 @@ class DialogsFragment : Fragment() {
 
     private fun navigateToCalling() = Intent(
         requireContext(),
-        CallingActivity::class.java
+        ReceiveCallActivity::class.java
     ).let { startActivity(it) }
 
     private fun drawStates(state: DialogState) = when (state) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/call_background_gradient"
-    tools:context=".presentation.features.startCall.StartCallFragment">
+    tools:context=".presentation.features.startCall.StartCallActivity">
 
     <TextView
         android:id="@+id/recipient_name_textView"
@@ -32,18 +32,9 @@
         android:contentDescription="@string/end_call"
         android:src="@drawable/ic_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/accept_call_imageView"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/start_call_progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/recipient_name_textView"
-        app:layout_constraintEnd_toEndOf="@+id/recipient_name_textView"
-        app:layout_constraintStart_toStartOf="@+id/recipient_name_textView"
-        app:layout_constraintTop_toTopOf="@+id/recipient_name_textView" />
 
     <ImageView
         android:id="@+id/recipient_imageView"
@@ -67,29 +58,23 @@
         tools:text="videoCall" />
 
     <ImageView
-        android:id="@+id/speaker_imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="24dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/audio_controller_imageView"
-        app:layout_constraintEnd_toStartOf="@+id/audio_controller_imageView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/audio_controller_imageView"
-        app:srcCompat="@drawable/ic_unmute" />
-
-    <ImageView
-        android:id="@+id/audio_controller_imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="32dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/stop_call_imageView"
+        android:id="@+id/accept_call_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_accept"
+        app:layout_constraintBottom_toBottomOf="@+id/stop_call_imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/speaker_imageView"
-        app:srcCompat="@drawable/ic_mute" />
+        app:layout_constraintStart_toEndOf="@+id/stop_call_imageView"
+        app:layout_constraintTop_toTopOf="@+id/stop_call_imageView" />
+
+    <ProgressBar
+        android:id="@+id/receive_call_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/recipient_name_textView"
+        app:layout_constraintEnd_toEndOf="@+id/recipient_name_textView"
+        app:layout_constraintStart_toStartOf="@+id/recipient_name_textView"
+        app:layout_constraintTop_toTopOf="@+id/recipient_name_textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

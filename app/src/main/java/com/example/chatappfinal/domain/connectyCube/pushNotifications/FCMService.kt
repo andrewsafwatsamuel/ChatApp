@@ -5,15 +5,17 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.core.app.NotificationCompat
 import com.example.chatappfinal.CALL_CHANNEL_ID
-import com.example.chatappfinal.CallingActivity
 import com.example.chatappfinal.R
 import com.example.chatappfinal.domain.connectyCube.PushObject
 import com.example.chatappfinal.domain.connectyCube.rtc.*
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogin
 import com.example.chatappfinal.domain.dataSources.databaseGateway.PushObjectDao
 import com.example.chatappfinal.domain.dataSources.databaseGateway.chatDatabase
+import com.example.chatappfinal.presentation.features.CallingActivity
+import com.example.chatappfinal.presentation.features.receiveCall.ReceiveCallActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import io.reactivex.disposables.CompositeDisposable
@@ -66,7 +68,15 @@ class FCMService(
     private fun createVideoNotification(name: String) =
         createNotificationBuilder(CALL_CHANNEL_ID).apply {
             setSmallIcon(R.drawable.ic_video_call)
-            setContentIntent(createPendingIntent(R.id.receiveCallFragment,CallingActivity::class.java))
+            setContentIntent(
+                PendingIntent.getActivity(
+                    this@FCMService,
+                    105,
+                    Intent(this@FCMService, ReceiveCallActivity::class.java),
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            )
+
             setContentTitle("Incoming Call from $name")
             addAction(R.drawable.ic_phone, "Accept", createCallIntent(true, 103))
             addAction(R.drawable.ic_close, "Reject", createCallIntent(false, 104))
@@ -74,9 +84,17 @@ class FCMService(
             priority = NotificationCompat.PRIORITY_MAX
         }.build()
 
-    private fun createCallIntent(accept: Boolean, requestCode: Int) = Intent(getString(R.string.action_call))
+    private fun createCallIntent(accept: Boolean, requestCode: Int) =
+        Intent(getString(R.string.action_call))
             .apply { putExtra(CALL_ACTION, accept) }
-            .let { PendingIntent.getBroadcast(this, requestCode, it, PendingIntent.FLAG_UPDATE_CURRENT) }
+            .let {
+                PendingIntent.getBroadcast(
+                    this,
+                    requestCode,
+                    it,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            }
 
     private fun insertNewMessage(data: MutableMap<String?, String?>): Unit = PushObject(
         data["message_id"] ?: "",
@@ -86,11 +104,11 @@ class FCMService(
         data["type"],
         data["user_id"].takeUnless { it.isNullOrBlank() }?.toInt(),
         data["sender_login"]
-    ).takeUnless { currentDialog.isCurrentDialog(it.dialogId)  }
+    ).takeUnless { currentDialog.isCurrentDialog(it.dialogId) }
         ?.let { pushObjectDao.insertMessage(it) }
         ?.subscribeOn(Schedulers.io())
         ?.subscribe({}, Throwable::printStackTrace)
-        ?.let { disposables.add(it) ;Unit} ?:Unit
+        ?.let { disposables.add(it);Unit } ?: Unit
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -129,10 +147,9 @@ class CallBroadCastReceiver : BroadcastReceiver() {
 
     private fun acceptCall(context: Context) = getCurrentSession()
         ?.acceptCall(getUserInfo())
-        ?.let { context.createTaskBuilder(R.id.callingFragment) }
-        ?.intents
-        ?.takeUnless { it.isEmpty() }
-        ?.let { context.startActivity(it[0]) }
+        ?.let { Intent(context,CallingActivity::class.java) }
+        ?.apply { flags = FLAG_ACTIVITY_NEW_TASK }
+        ?.let { context.startActivity(it) }
 
     private fun rejectCall() = getCurrentSession()?.rejectCall(getUserInfo())
 
