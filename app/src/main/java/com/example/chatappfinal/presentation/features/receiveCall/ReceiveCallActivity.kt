@@ -17,10 +17,8 @@ import com.example.chatappfinal.presentation.features.CallingActivity
 import com.example.chatappfinal.presentation.features.chat.AUDIO_CALL
 import com.example.chatappfinal.presentation.features.chat.VIDEO_CALL
 import com.example.chatappfinal.presentation.hide
-import com.example.chatappfinal.presentation.loadPhoto
 import kotlinx.android.synthetic.main.activity_receive_call.*
 import kotlinx.android.synthetic.main.activity_receive_call.call_type_textView
-import kotlinx.android.synthetic.main.activity_receive_call.recipient_imageView
 import kotlinx.android.synthetic.main.activity_receive_call.recipient_name_textView
 import kotlinx.android.synthetic.main.activity_receive_call.stop_call_imageView
 
@@ -45,7 +43,7 @@ class ReceiveCallActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun retrieveUser() = getUser(session?.callerID ?: 0, createEntityCallbacks({ user ->
         receive_call_progressBar.hide()
-//        recipient_imageView.loadPhoto(user?.avatar)
+       // recipient_imageView.loadPhoto(user?.avatar)
         recipient_name_textView.text = "Call from ${user?.login}"
         call_type_textView.text = setCallType()
         stop_call_imageView.setOnClickListener { rejectCall() }

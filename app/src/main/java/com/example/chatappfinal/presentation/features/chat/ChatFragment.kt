@@ -25,6 +25,7 @@ import com.example.chatappfinal.domain.connectyCube.textChat.messaging.editMessa
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.getRealPathFromURI
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.updateMessages
 import com.example.chatappfinal.presentation.features.startCall.StartCallActivity
+import com.example.chatappfinal.presentation.hideKeyboard
 import com.example.chatappfinal.presentation.openPhotos
 import com.example.chatappfinal.presentation.typingListener
 import kotlinx.android.synthetic.main.content_conversation.*
@@ -193,4 +194,9 @@ class ChatFragment : Fragment() {
             putExtra("flag",flag)
             putExtra("dialog",dialog)
         }.let { startActivity(it) }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.hideKeyboard()
+    }
 }

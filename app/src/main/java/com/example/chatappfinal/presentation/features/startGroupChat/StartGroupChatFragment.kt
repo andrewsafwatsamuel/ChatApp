@@ -81,4 +81,9 @@ class StartGroupChatFragment : Fragment() {
         start_group_progressBar.hide()
         start_group_layout.createSnackBar(message)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.hideKeyboard()
+    }
 }

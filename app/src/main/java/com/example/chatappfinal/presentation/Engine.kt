@@ -6,23 +6,24 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.inputmethod.InputMethodManager
 import com.bumptech.glide.Glide
 import com.example.chatappfinal.R
 import com.example.chatappfinal.presentation.features.chat.FILES_CODE
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,7 +61,7 @@ fun ImageView.loadPhoto(url: String?) = Glide.with(context)
 
 @SuppressLint("SimpleDateFormat")
 fun formatDate(date: Long): String = SimpleDateFormat("hh:mm aa")
-    .format(Date(date*1000))
+    .format(Date(date * 1000))
 
 fun Fragment.openPhotos() = Intent(Intent.ACTION_GET_CONTENT)
     .apply {
@@ -108,9 +109,19 @@ class SoftKeyboardListener(
 
 fun typingListener(isTyping: (Int) -> Unit = {}): TextWatcher = object : TextWatcher {
     override fun afterTextChanged(p0: Editable?) = Unit
-    override fun beforeTextChanged(s:CharSequence,start:Int, count:Int,  after:Int){
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int){
     }
-    override fun onTextChanged(s:CharSequence ,start:Int,before:Int, count:Int) {
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         isTyping(s.length)
     }
+}
+
+fun Activity.hideKeyboard() {
+    val inputManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    //Find the currently focused view, so we can grab the correct window token from it.
+    var view = currentFocus
+    //If no view currently has focus, create a new one, just so we can grab a window token from it
+    if (view == null) view = View(this)
+
+    inputManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
