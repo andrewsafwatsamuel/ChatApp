@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.core.util.contains
 import androidx.core.util.forEach
 import androidx.core.util.isNotEmpty
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.connectycube.chat.model.ConnectycubeChatMessage
@@ -21,6 +23,17 @@ import com.example.chatappfinal.domain.connectyCube.textChat.messaging.READ
 import com.example.chatappfinal.domain.connectyCube.textChat.messaging.getAttachmentUrl
 import com.example.chatappfinal.presentation.hide
 import com.example.chatappfinal.presentation.show
+
+private val messagesUtils by lazy {
+    object : DiffUtil.ItemCallback<InAppMessage>() {
+        override fun areItemsTheSame(oldItem: InAppMessage, newItem: InAppMessage): Boolean =
+            oldItem.connectyCubeMessage.id == newItem.connectyCubeMessage.id
+
+
+        override fun areContentsTheSame(oldItem: InAppMessage, newItem: InAppMessage): Boolean =
+            oldItem == newItem
+    }
+}
 
 class ChatViewHolder(
     val view: View,
@@ -42,7 +55,7 @@ class ChatViewHolder(
             if (connectyCubeMessage.senderId == getUserFromPreference()?.id) statusImageView.setImageResource(
                 status.drawStatus()
             )
-            if (messageTextView.text == "null" || messageTextView.text.isEmpty()) messageTextView.hide()
+            if (messageTextView.text == "null"||messageTextView.text.isEmpty()) messageTextView.hide()
             isSelectedView.visibility = if (isSelected) View.VISIBLE else View.GONE
             if (senderName != getUserFromPreference()?.login && dialogType != ConnectycubeDialogType.PRIVATE) {
                 senderNameTextView.show()
@@ -65,11 +78,10 @@ class ChatViewHolder(
 
 class ChatAdapterDefault(
     private val dialogType: ConnectycubeDialogType,
-    val messages: MutableList<InAppMessage> = mutableListOf(),
     private val selectedItems: SparseBooleanArray = SparseBooleanArray(),
     private val onLongClick: (List<InAppMessage>) -> Unit,
     private val onPhotoClicked: (String) -> Unit
-) : RecyclerView.Adapter<ChatViewHolder>() {
+) : ListAdapter<InAppMessage, ChatViewHolder>(messagesUtils) {
 
     private fun isSelected(position: Int) = selectedItems.contains(position)
 
@@ -93,16 +105,15 @@ class ChatAdapterDefault(
         arrayListOf<Int>().apply { selectedItems.forEach { item, _ -> add(item) } }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        holder.bind(messages[position], isSelected(position), dialogType)
+        holder.bind(getItem(position), isSelected(position),dialogType)
         holder.view.setOnLongClickListener { setOnSelectionChanged(position) }
         holder.view.setOnClickListener {
             if (selectedItems.isNotEmpty()) setOnSelectionChanged(
                 position
             )
         }
-    }
 
-    override fun getItemCount() = messages.size
+    }
 
     private fun setOnSelectionChanged(position: Int): Boolean {
         toggleSelection(position)
@@ -111,11 +122,11 @@ class ChatAdapterDefault(
     }
 
     private fun getSelection() = mutableListOf<InAppMessage>()
-        .apply { getSelectedItems().forEach { add(messages[it]) } }
+        .apply { getSelectedItems().forEach { add(currentList[it]) } }
 
     override fun getItemViewType(
         position: Int
-    ): Int = if (messages[position].connectyCubeMessage.senderId in listOf(
+    ): Int = if (getItem(position).connectyCubeMessage.senderId in listOf(
             getUserFromPreference()?.id,
             null
         )
@@ -130,50 +141,6 @@ class ChatAdapterDefault(
         ).let { ChatViewHolder(it, onPhotoClicked) }
 
     fun getMessageIds() = mutableListOf<ConnectycubeChatMessage>()
-        .apply { getSelectedItems().forEach { add(messages[it].connectyCubeMessage) } }
+        .apply { getSelectedItems().forEach { add(currentList[it].connectyCubeMessage) } }
         .toList()
-
-    fun submitList(items: List<InAppMessage>) = when {
-        messages.isEmpty() -> onEmpty(items)
-        items.size > messages.size -> onNewItemAdded(items)
-        items.size < messages.size -> onItemDeleted(items)
-        else -> onStatusUpdated(items)
-    }
-
-    private fun onEmpty(items: List<InAppMessage>) {
-        messages.addAll(items)
-        notifyDataSetChanged()
-        return
-    }
-
-    private fun onNewItemAdded(items: List<InAppMessage>) {
-        val difference = items.size - messages.size
-        val startIndex = items.size - difference
-        for (i in startIndex until items.size) {
-            messages.add(items[i])
-            notifyItemInserted(i)
-        }
-        return
-    }
-
-    private fun onItemDeleted(items: List<InAppMessage>) {
-        for (i in messages.indices) {
-            if (!items.contains(messages[i])) messages.removeAt(i);notifyItemRemoved(i)
-        }
-        return
-    }
-
-    private fun onStatusUpdated(items: List<InAppMessage>) {
-        for (i in messages.indices) notEqualStatus(i, items)
-        return
-    }
-
-    private fun notEqualStatus(index: Int, items: List<InAppMessage>) {
-        if (messages[index].status != items[index].status) {
-            messages.removeAt(index)
-            messages.add(index, items[index])
-            notifyItemChanged(index)
-        }
-    }
-
 }

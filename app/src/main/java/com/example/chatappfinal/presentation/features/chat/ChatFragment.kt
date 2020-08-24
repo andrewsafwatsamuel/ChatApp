@@ -80,7 +80,7 @@ class ChatFragment : Fragment() {
 
         updateMessages(viewModel.disposables) {
             adapter.submitList(it)
-            recyclerView.scrollToPosition(it.size - 1)
+            recyclerView.scrollToPosition(adapter.itemCount-1)
             hideOnSelected()
         }
         setOnClicks(dialog)
@@ -125,7 +125,7 @@ class ChatFragment : Fragment() {
     private fun edit(dialog: ConnectycubeChatDialog) = editMessage(
         adapter.getMessageIds()[0].id,
         et_message.text.toString(),
-        adapter.messages.size - 1 == adapter.getSelectedItems()[0],
+        adapter.currentList.size - 1 == adapter.getSelectedItems()[0],
         dialog
     )
 
