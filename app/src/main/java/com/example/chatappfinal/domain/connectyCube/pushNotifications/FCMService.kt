@@ -30,14 +30,9 @@ class FCMService(
     private val disposables: CompositeDisposable = CompositeDisposable()
 ) : FirebaseMessagingService() {
 
-    override fun onCreate() {
-        super.onCreate()
-        chatLogin { }
-    }
-
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        chatLogin { if (it == null) onLoggedIn(message) }
+        chatLogin { onLoggedIn(message) }
     }
 
 

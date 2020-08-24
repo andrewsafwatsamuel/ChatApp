@@ -15,6 +15,7 @@ import com.example.chatappfinal.domain.connectyCube.ConnectyCube
 import com.example.chatappfinal.domain.connectyCube.PushObject
 import com.example.chatappfinal.domain.connectyCube.pushNotifications.*
 import com.example.chatappfinal.domain.connectyCube.textChat.chatLogin
+import com.example.chatappfinal.domain.connectyCube.textChat.isLoggedIn
 import com.example.chatappfinal.domain.dataSources.databaseGateway.chatDatabase
 import com.example.chatappfinal.presentation.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -87,8 +88,9 @@ class ChatAppFinalApp : Application() {
 
         }
 
-    private fun onNotLoggedIn(id: String, dialog: (ConnectycubeChatDialog)->Unit)=
-        chatLogin { if (it!=null) getDialog(id,dialog) }
+    private fun onNotLoggedIn(id: String, dialog: (ConnectycubeChatDialog)->Unit)= chatLogin {
+        getDialog(id,dialog)
+    }
 
 
     private fun getDialog(id:String, dialog: (ConnectycubeChatDialog)->Unit)=ConnectycubeRestChatService

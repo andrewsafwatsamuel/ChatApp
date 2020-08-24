@@ -16,10 +16,12 @@ fun chatLogin(
 ) = user?.apply { this.id = id; this.password = password }
     ?.let {
         //for message status sent, delivered and read
-        if (!isLoggedIn()) {
+        if (isLoggedIn()) {
+            onComplete(null)
+        } else {
             chatService.setUseStreamManagement(true)
             chatService.login(it, createEntityCallbacks<Unit>({ initOnLogin();onComplete(null) }, onComplete))
-        } else onComplete(null)
+        }
     }
 
 fun chatLogout(onComplete: (Exception?) -> Unit) = chatInstance
